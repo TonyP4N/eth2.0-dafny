@@ -40,14 +40,20 @@ I have checked the proofs with Dafny **3.2.0** under Ubuntu 20.04 env.
 
 Assuming you have a running Dafny compiler, you may use the following command line at the root of the repository to check a `*.dfy` file:
 ```
-> dafny /compile:3 /out:bin/Helpers.cap src/dafny/beacon/Helpers.cap.dfy
+> dafny /dafnyVerify:1 /compile:3 /noCheating:1 src/dafny/beacon/Helpers.cap.dfy
 Dafny 3.2.0.30713
 
 Dafny program verifier finished with 3 verified, 0 errors
-Wrote textual form of target program to Helpers.cs
-Compiled assembly into Helpers.dll
+Compiled assembly into Helpers.cap.dll
 Program compiled successfully
 ```
+
+`/dafnyVerify:1`: This option controls whether the Dafny verifier is enabled or not. Setting it to 1 enables verification of Dafny assertions, lemmas, and proofs in your code. 
+
+`/compile:3`: This option typically means to verify and compile all specified Dafny files.
+
+`/noCheating:1`: This option will increase the strictness of the verification process, potentially disallowing certain operations or constructs that could undermine the integrity of the verification. 
+
 
 > For an even  better experience, you may install VSCode and the Dafny plugin [here](https://marketplace.visualstudio.com/items?itemName=dafny-lang.ide-vscode), the latest adaptable plugin version is **2.3.0**.
 
