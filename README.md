@@ -82,16 +82,18 @@ Then, the executable Python code of spec will be generated. You can test it by s
 - scripts/call_graph.py **_[modified]_**
 - scripts/countLines.py **_[modified]_**
 - src/dafny/beacon/BeaconChainTypes.dfy **_[modified]_**
-- src/dafny/beacon/Helpers.cap.dfy **_[new]_**
+- src/dafny/beacon/Helpers.dfy **_[modified]_**
 - src/dafny/beacon/Helpers.dfy **_[modified]_**
 - src/dafny/beacon/statetransition/EpochProcessing.dfy **_[modified]_**
 - src/dafny/beacon/statetransition/EpochProcessing.s.dfy **_[modified]_**
 - src/dafny/beacon/statetransition/StateTransition.dfy **_[modified]_**
-- src/dafny/beacon/statetransition/stateTransition.cap.dfy **_[new]_**
 - src/dafny/beacon/validators/Validators.dfy **_[modified]_**
 - src/dafny/ssz/Constants.dfy **_[modified]_**
 - src/dafny/utils/Eth2Types.dfy **_[modified]_**
 - test/dafny/merkle/third_party_implementations/PySszBitlistMerkleisation.py **_[modified]_**
+- src/dafny/beacon/Helpers.cap.dfy **_[new]_**
+- src/dafny/beacon/statetransition/stateTransition.cap.dfy **_[new]_**
+- test/exe_spec_test.py **_[new]_**
 
 # How to complie to other languages
 > For example, compile to PHP
