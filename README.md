@@ -1,10 +1,9 @@
+<h1 align="center">Formal Verification of Capella Fork with Dafny</h1>
 
-<!-- [![Build Status](https://circleci.com/gh/ConsenSys/eth2.0-dafny.svg?style=shield)](https://circleci.com/gh/ConsenSys/workflows/eth2.0-dafny)  -->
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) 
 [![made-for-VSCode](https://img.shields.io/badge/Made%20for-VSCode-1f425f.svg)](https://code.visualstudio.com/)
 [![Checks](https://img.shields.io/badge/DafnyVerify-Verified-darkgreen.svg)](https://shields.io/) 
-
- <!-- ![GitHub commit activity](https://img.shields.io/github/commit-activity/w/PegaSysEng/eth2.0-dafny?style=flat) -->
+  
 
 # Overview 
 
@@ -12,7 +11,7 @@ This project was built upon the [eth2.0-dafny](https://github.com/ConsenSys/eth2
 
 ## Objectives
 
-The objective of this project is to contribute a new **formal specification** of the Eth2.0 specification, specifically, for the [Capella Fork](https://github.com/ethereum/consensus-specs/blob/dev/specs/capella/beacon-chain.md), in the verification-aware programming language [Dafny](https://github.com/dafny-lang/dafny/wiki).
+The objective of this project is to contribute a new **formal specification** of the Eth2.0 specification, specifically for the [Capella Fork](https://github.com/ethereum/consensus-specs/blob/dev/specs/capella/beacon-chain.md), in the verification-aware programming language [Dafny](https://github.com/dafny-lang/dafny/wiki).
 
 ### Goals
 
@@ -21,79 +20,88 @@ The objective of this project is to contribute a new **formal specification** of
 - [x] Add a **formal (non-ambiguous and functional) specification** of the Capella Fork.
 This specification is also written with pre/post-conditions using the [Hoare logic](https://en.wikipedia.org/wiki/Hoare_logic) style proof.
 
-- [x] **Formally prove** that the implementation satisfies the specification. The formal proof is provided in the form of mathematical proofs of lemmas written in Dafny.
+- [x] **Formally prove** that the implementation satisfies the specification.
 
-## How to use the verified code?
+
+## Get started
+### Requirements (For Linux)
+- Install .NET 6.0 as described above
+- Install python3: e.g., sudo apt install python3 python3-pip
+- If you intend to compile to PHP..., install PHP. (By parity of reasoning)
+
+### Installation
+- install Dafny, see [Dafny tutorial(Linux Version)](https://github.com/dafny-lang/dafny/wiki/INSTALL#linux-source).
+- clone or fork this repository.
+
+
+## How to check the proofs?
+
+I have checked the proofs with Dafny **3.2.0** under Ubuntu 20.04 env.
+
+Assuming you have a running Dafny compiler, you may use the following command line at the root of the repository to check a `*.dfy` file:
+```
+> dafny /compile:3 /out:bin/Helpers.cap src/dafny/beacon/Helpers.cap.dfy
+Dafny 3.2.0.30713
+
+Dafny program verifier finished with 3 verified, 0 errors
+Wrote textual form of target program to Helpers.cs
+Compiled assembly into Helpers.dll
+Program compiled successfully
+```
+
+> For an even  better experience, you may install VSCode and the Dafny plugin [here](https://marketplace.visualstudio.com/items?itemName=dafny-lang.ide-vscode), the latest adaptable plugin version is **2.3.0**.
+
+## Beyond reproducing
 
 Depending on your inclination you may use the verified code in different ways:
 
-* you can find **function specifications**  (usually in ``.s.dfy`` files). They describe state changes as functions mapping a state (and other parameters like blocks) to a new state;
-These specifications can help to write your own client in your preferred language (including functional programming languages); we have provided an example of implementation for each function, adapted from the [Eth2.0 reference spec](https://github.com/ethereum/eth2.0-specs).
+* you may **contribute new code and proofs** by either adding functions that have not been implemented yet or even testing that new ideas and optimisations do not break the proofs;
 
-* you may **contribute new code and proofs** by either adding functions we have not implemented yet or even test that new ideas and optimisations do not break the proofs;
+* you may use Dafny to **generate target code** (e.g. Go, Java, C#, JavaScript, PHP) and see how the automated generated code can replace or complement your code base;
 
-* you may use Dafny to **generate target code** (e.g. Go, Java, C#, JavaScript) and see how the automated generated code can replace or complement your code base;
-
-* you may use the specifications to help in **unit testing** your own code. The specifications contain **unambiguous pre and post conditions** that clearly specify the effect of a function/method.  They can be used to write property-drive tests.
+* you may use the specifications to help in **unit testing** your own code. The specifications contain **unambiguous pre and post-conditions** that clearly specify the effect of a function/method.  They can be used to write property-drive tests.
 
 
-# How to check the proofs?
-
-We have checked the proofs with Dafny 3.0.0 and Dafny 3.2.0.
-
-The bash scripts ``verifyAll.sh`` can be used to verify the files in a given directory (e.g. using the Docker container, see below).
-
-For example checking the ``attestations`` package can be done by:
-
-```[bash]
-/home/user1/eth2.0-dafny $ time ./verifyAll.sh src/dafny/beacon/attestations   -------------------------------------------------------
-Processing src/dafny/beacon/attestations/AttestationsHelpers.dfy with config /dafnyVerify:1 /compile:0  /noCheating:1
-/home/user1/eth2.0-dafny/src/dafny/beacon/attestations/../../utils/SetHelpers.dfy(38,17): Warning: /!\ No terms found to trigger on.
-/home/user1/eth2.0-dafny/src/dafny/beacon/attestations/../../utils/SetHelpers.dfy(60,22): Warning: /!\ No terms found to trigger on.
-/home/user1/eth2.0-dafny/src/dafny/beacon/attestations/../gasper/GasperEBBs.dfy(91,16): Warning: /!\ No terms found to trigger on.
-/home/user1/eth2.0-dafny/src/dafny/beacon/attestations/../gasper/GasperEBBs.dfy(159,16): Warning: /!\ No terms found to trigger on.
-
-Dafny program verifier finished with 24 verified, 0 errors
-No errors in src/dafny/beacon/attestations/AttestationsHelpers.dfy
--------------------------------------------------------
-Processing src/dafny/beacon/attestations/AttestationsTypes.dfy with config /dafnyVerify:1 /compile:0  /noCheating:1
-/home/user1/eth2.0-dafny/src/dafny/beacon/attestations/../../utils/SetHelpers.dfy(38,17): Warning: /!\ No terms found to trigger on.
-/home/user1/eth2.0-dafny/src/dafny/beacon/attestations/../../utils/SetHelpers.dfy(60,22): Warning: /!\ No terms found to trigger on.
-
-Dafny program verifier finished with 12 verified, 0 errors
-No errors in src/dafny/beacon/attestations/AttestationsTypes.dfy
--------------------------------------------------------
-[OK] src/dafny/beacon/attestations/AttestationsHelpers.dfy
-[OK] src/dafny/beacon/attestations/AttestationsTypes.dfy
-Summary: 2 files processed - No errors occured! Great job.
-./verifyAll.sh src/dafny/beacon/attestations  29.27s user 0.54s system 102% cpu 29.138 total
-```
-
-## Install Dafny on your computer
-
-Pre-requisites:
-
-* install Dafny, see [Dafny wiki](wiki/dafny.md).
-* clone or fork this repository.
-
-Assuming you have a running Dafny compiler, you may use the following command line to check a `*.dfy` file:
-```
-> dafny /dafnyVerify:1 /compile:0  /timeLimit:60 src/dafny/utils/MathHelpers.dfy
-Dafny 2.3.0.10506
-
-Dafny program verifier finished with 13 verified, 0 errors
-```
-
-The [test folder](https://github.com/PegaSysEng/eth2.0-dafny/tree/master/test/dafny) contains some tests.
-The purpose of this directory is to demonstrate that we can extract an implementation and run it (indeed, once we have proved the code, there is no need to test it).
-To run the tests, you can issue the following command from the root directory (it collects all the files in the test folder, compile them and run them):
+## How to play with counterexamples if you find new errors?
 
 ```
-> ./scripts/runAllTests.sh
+$ git clone https://github.com/ethereum/consensus-specs.git
+$ cd <consensus-root>
+$ python3 -m venv .          # create a virtual env
+$ source bin/activate        # activate the virtual env
+$ make install_test          # install the necessary packages
+$ python setup.py pyspecdev
 ```
+Then, the executable Python code of spec will be generated. You can test it by simply running the following command:
 
- For an even  better experience you may install VSCode and the Dafny plugin see [our Dafny wiki](https://github.com/PegaSysEng/eth2.0-dafny/wiki/Eth2.0-verification-in-Dafny).
+` python <your_test_file.py> `
 
-## How to test specification using counterexamples?
+> There is an example testing file under `eth2.0-dafny/test/` called **exec_spec_test.py**; put it under `consensus-specs/tests/core/pyspec`, then run it.
 
-TODO
+# My Contributions:
+- scripts/call_graph.py **_[modified]_**
+- scripts/countLines.py **_[modified]_**
+- src/dafny/beacon/BeaconChainTypes.dfy **_[modified]_**
+- src/dafny/beacon/Helpers.cap.dfy **_[new]_**
+- src/dafny/beacon/Helpers.dfy **_[modified]_**
+- src/dafny/beacon/statetransition/EpochProcessing.dfy **_[modified]_**
+- src/dafny/beacon/statetransition/EpochProcessing.s.dfy **_[modified]_**
+- src/dafny/beacon/statetransition/StateTransition.dfy **_[modified]_**
+- src/dafny/beacon/statetransition/stateTransition.cap.dfy **_[new]_**
+- src/dafny/beacon/validators/Validators.dfy **_[modified]_**
+- src/dafny/ssz/Constants.dfy **_[modified]_**
+- src/dafny/utils/Eth2Types.dfy **_[modified]_**
+- test/dafny/merkle/third_party_implementations/PySszBitlistMerkleisation.py **_[modified]_**
+
+# How to complie to other languages
+> For example, compile to PHP
+
+`dafny /compileTarget:php /spillTargetCode:1 <YOUR_FILE.dfy>`
+
+For other languages, replace the parameter of `/compileTarget`.
+For more information, click [here](https://dafny.org/latest/toc)
+
+
+
+
+
