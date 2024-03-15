@@ -96,12 +96,12 @@ Then, the executable Python code of spec will be generated. You can test it by s
 - test/exe_spec_test.py **_[new]_**
 
 # How to complie to other languages
-> For example, compile to PHP
+For example, compile to PHP
 
 `dafny /compileTarget:php /spillTargetCode:1 <YOUR_FILE.dfy>`
 
 For other languages, replace the parameter of `/compileTarget`.
-For more information, click [here](https://dafny.org/latest/toc)
+> For more information, please click [here](https://dafny.org/latest/toc)
 
 
 
