@@ -11,19 +11,15 @@ processedfiles=0
 
 declare -a filesToCheck=(
 "src/dafny/beacon/BeaconChainTypes.dfy"
-"src/dafny/beacon/Helpers.dfy"
-"src/dafny/beacon/statetransition/EpochProcessing.dfy"
-"src/dafny/beacon/statetransition/EpochProcessing.s.dfy"
 "src/dafny/beacon/statetransition/StateTransition.dfy"
 "src/dafny/beacon/validators/Validators.dfy"
 "src/dafny/ssz/Constants.dfy"
 "src/dafny/utils/Eth2Types.dfy"
-"test/dafny/merkle/third_party_implementations/PySszBitlistMerkleisation.py"
 "src/dafny/beacon/Helpers.cap.dfy"
 "src/dafny/beacon/statetransition/stateTransition.cap.dfy"
 )
 
-defaultverifconf="/dafnyVerify:1 /compile:0 /noCheating:1"
+defaultverifconf="/verifyAllModules /dafnyVerify:1 /compile:3 /noCheating:1"
 
 # Function to process each file
 process_file() {
